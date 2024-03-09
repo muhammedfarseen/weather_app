@@ -1,8 +1,3 @@
-
-
-  
-
-////////////this is  user curre weather image map and call in homeScreen\\\\\\\\\\\\\\\\\
 Map<String, dynamic> imagepaths = {
   "Clear": "assets/images/clear.png",
   "Cloud": "assets/images/cloud-lightning.png",
