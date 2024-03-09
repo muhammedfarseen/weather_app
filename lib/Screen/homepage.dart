@@ -40,9 +40,7 @@ class _HomeScreenState extends State<HomeScreen>
         }
       }
     });
-    // Provider.of<locationprovider>(context, listen: false).determinePosition();
-    // Provider.of<WeatherServiceProvider>(context, listen: false)
-    //     .fetchWeatherDataByCity("dubai");
+   
   }
 
   Weather? obbj;
@@ -56,13 +54,13 @@ class _HomeScreenState extends State<HomeScreen>
     int sunriseTimestamp = weatherprovider.weather?.sys?.sunrise ?? 0;
     int sunsetTimestamp = weatherprovider.weather?.sys?.sunset ?? 0;
 
-// Convert the timestamp to a DateTime object
+
     DateTime sunriseDateTime =
         DateTime.fromMillisecondsSinceEpoch(sunriseTimestamp * 1000);
     DateTime sunsetDateTime =
         DateTime.fromMillisecondsSinceEpoch(sunsetTimestamp * 1000);
 
-// Format the sunrise time as a string
+
     String Sunrise = DateFormat.Hm().format(sunriseDateTime);
     String Sunset = DateFormat.Hm().format(sunsetDateTime);
 
@@ -395,7 +393,5 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-//   Future fetch() async {
-//     obbj = await fetchWeatherData();
-//   }
+
 }
