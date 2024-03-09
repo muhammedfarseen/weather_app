@@ -29,6 +29,8 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
+
+         ///////////locationprovider\\\\\\\\\\\
     final locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
     locationProvider.determinePosition().then((_) {
@@ -40,9 +42,7 @@ class _HomeScreenState extends State<HomeScreen>
         }
       }
     });
-    // Provider.of<locationprovider>(context, listen: false).determinePosition();
-    // Provider.of<WeatherServiceProvider>(context, listen: false)
-    //     .fetchWeatherDataByCity("dubai");
+   
   }
 
   Weather? obbj;
@@ -50,19 +50,24 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    /////////locationprovider\\\\\\\\\\\\\
     final locationprovider = Provider.of<LocationProvider>(context);
     final weatherprovider = Provider.of<WeatherServiceProvider>(context);
 
+
+         ////////////sunrise and sunset convert to time stamp////////////////
+
     int sunriseTimestamp = weatherprovider.weather?.sys?.sunrise ?? 0;
     int sunsetTimestamp = weatherprovider.weather?.sys?.sunset ?? 0;
-
-// Convert the timestamp to a DateTime object
+ 
+    
     DateTime sunriseDateTime =
         DateTime.fromMillisecondsSinceEpoch(sunriseTimestamp * 1000);
     DateTime sunsetDateTime =
         DateTime.fromMillisecondsSinceEpoch(sunsetTimestamp * 1000);
 
-// Format the sunrise time as a string
+
     String Sunrise = DateFormat.Hm().format(sunriseDateTime);
     String Sunset = DateFormat.Hm().format(sunsetDateTime);
 
@@ -110,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 ),
                                 IconButton(
                                     onPressed: () {
+                                      //////////// this is user search cuntry and click the icon and show the cuntry\\\\\\\\\\\\\ 
                                       print(CitySearchController.text);
                                         Provider.of<WeatherServiceProvider>(context, listen: false).fetchWeatherDataByCity(CitySearchController.text.toString());
                                     },
@@ -121,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
                           )
                         : SizedBox.shrink(),
+                                  ////////////user current location\\\\\\\\\\\
                     Consumer<LocationProvider>(
                       builder: (context, LocationProvider, child) {
                         var locationCity;
@@ -149,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen>
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
+                                          ///////////calling the user current location\\\\\\\\\\\\
                                            locationCity.toString(),
                                           style: TextStyle(
                                             fontSize: 20,
@@ -160,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen>
                                           height: 1,
                                         ),
                                         Text(
-                                          "Goodmornig",
+                                            _timechanger(),
                                           style: TextStyle(
                                             fontSize: 15,
                                             color: Colors.white,
@@ -198,6 +206,7 @@ class _HomeScreenState extends State<HomeScreen>
                     Container(
                       height: 150,
                       width: 150,
+                      //////////////this image show the current cloudsisteme\\\\\\\\
                       child: Image.asset(imagepaths[
                               weatherprovider.weather?.weather![0].main ??
                                   "N/A"] ??
@@ -212,6 +221,7 @@ class _HomeScreenState extends State<HomeScreen>
                       child: Column(
                         children: [
                           Text(
+                            //////////////this calling the tempracher\\\\\\\\\\\\\
                             "${weatherprovider.weather?.main?.temp.toString() ?? "N/A"} \u00B0C",
                             style: TextStyle(
                               color: Colors.white,
@@ -220,6 +230,7 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
                           ),
                            Text(
+                            /////////this show cuntry name\\\\\\\\\\\\\
                             "${weatherprovider.weather?.name ?? "N/A"}",
                             style: TextStyle(
                               color: Colors.white,
@@ -231,6 +242,7 @@ class _HomeScreenState extends State<HomeScreen>
                             height: 7,
                           ),
                           Text(
+                               /////////this is weather show in user\\\\\\\
                             "${weatherprovider.weather?.weather![0].main ?? "N/A"}",
                             style: TextStyle(
                               color: Colors.white,
@@ -242,6 +254,7 @@ class _HomeScreenState extends State<HomeScreen>
                             height: 5,
                           ),
                           Text(
+                             /////////////this is show the current time\\\\\\\\\\
                             DateFormat("hh:mm: a").format(DateTime.now()),
                             style: TextStyle(color: Colors.white),
                           ),
@@ -279,6 +292,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     ),
                                   ),
                                   Text(
+                                    /////////////temp-max\\\\\\\\\\\\\\\\\
                                     "${weatherprovider.weather?.main?.tempMax.toString()}",
                                     style: TextStyle(
                                       color: Colors.white,
@@ -308,6 +322,7 @@ class _HomeScreenState extends State<HomeScreen>
                                         ),
                                       ),
                                       Text(
+                                         //////////temp-main\\\\\\\\\\\\\
                                         "${weatherprovider.weather?.main?.tempMin.toString()}",
                                         style: TextStyle(
                                           color: Colors.white,
@@ -344,6 +359,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     ),
                                   ),
                                   Text(
+                                    //////////sunrise timestamp\\\\\\\\\\
                                     "${Sunrise} AM",
                                     style: TextStyle(
                                       color: Colors.white,
@@ -372,6 +388,7 @@ class _HomeScreenState extends State<HomeScreen>
                                         ),
                                       ),
                                       Text(
+                                        //////////sunset timestamp\\\\\\\\\\
                                         "${Sunset} PM",
                                         style: TextStyle(
                                           color: Colors.white,
@@ -395,7 +412,16 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-//   Future fetch() async {
-//     obbj = await fetchWeatherData();
-//   }
+}
+String _timechanger() {
+  var hour = DateTime.now().hour;
+  if (hour < 12) {
+    return "GOOD MORNING";
+  } else if (hour < 16) {
+    return "GOOD AFTERNOON";
+  } else if (hour < 19) {
+    return "GOOD EVENING";
+  } else {
+    return 'GOOD NIGHT';
+  }
 }

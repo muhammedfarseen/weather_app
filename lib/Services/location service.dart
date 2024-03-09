@@ -14,7 +14,7 @@ class LocationService {
       } catch (e) {
         print("Error fetching location name");
       }
-
+          
       return null;
     }
     return null;

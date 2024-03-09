@@ -26,6 +26,7 @@ class WeatherServiceProvider extends ChangeNotifier {
       final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        /////////print weather information and data\\\\\\\\\\\\\\\\\
         print(data);
         _weather = WeatherModel.fromJson(data);
         notifyListeners();
@@ -40,91 +41,4 @@ class WeatherServiceProvider extends ChangeNotifier {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-// import 'package:http/http.dart' as http;
-// import 'dart:convert';
-
-// import 'package:weather_app/Services/location%20service.dart';
-
-// Future<Weather> fetchWeatherData() async {
-//   final obj = LocationService();
-
-//   final String apiKey = '49b8f6db8ed85115337cec7092e57bad';
-//   final String apiUrl =
-//       'https://api.openweathermap.org/data/2.5/weather?lat=${obj.latitude}&lon=${obj.longitude}&appid=${apiKey}&units=metric';
-
-//   try {
-//     final response = await http.get(Uri.parse(apiUrl));
-//     if (response.statusCode == 200) {
-//       return Weather.formJson(jsonDecode(response.body) as Map<String, dynamic>);
-//     } else {
-//       print(response.statusCode.toString());
-//       throw Exception('Failed to load data with status code ${response.statusCode}');
-//     }
-//   } catch (e) {
-//     print('Error: $e');
-//     throw Exception('Failed to load data: $e');
-//   }
-// }
-
-
-// class Weather {
-//   double? temperature;
-//   double? humidity;
-//   String? city;
-//   String? icon;
-//   String? description;
-//   Weather({
-//     required this.city,
-//     required this.temperature,
-//     required this.humidity,
-//     required this.icon,
-//     required this.description,
-//   });
-//   Weather.formJson(Map<String, dynamic> json) {
-//     temperature = json["main"]["temp"];
-//     humidity = json["main"]["humidity"];
-//     city = json["name"];
-//     icon = json["weather"][0]["icon"];
-//     description = json["weather"][0]["description"];
-//   }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
