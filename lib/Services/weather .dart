@@ -1,47 +1,45 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/widgets.dart';
 import 'package:weather_app/Models/api.dart';
 import 'package:weather_app/weather_respond_model.dart';
+import 'package:http/http.dart' as http;
 
 class WeatherServiceProvider extends ChangeNotifier {
   WeatherModel? _weather;
 
   WeatherModel? get weather => _weather;
 
-  bool _isloading = false;
-  bool get isLoading => _isloading;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
   String _error = "";
   String get error => _error;
 
   Future<void> fetchWeatherDataByCity(String city) async {
-    _isloading = true;
-    _error = "";
-    //https: api.openweathermap.org/data/2.5/weather?q=dubai&appid=ad93ec9d6bcf5c35eec3b3f597b82047&units=metric
-    try {
-      final String apiUrl =
-          "${apiendpoints().cityurl}${city}&appid=${apiendpoints().apikey}${apiendpoints().unit}";
-      //print(apiUrl);
-      final response = await http.get(Uri.parse(apiUrl));
+    _isLoading = true; // Corrected from false to true
+    _error = "Error: ";
 
+    try {
+      final apiUrl =
+          "${apiendpoints().cityurl}$city&appid=${apiendpoints().apikey}${apiendpoints().unit}";
+
+      final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         print(data);
-
         _weather = WeatherModel.fromJson(data);
-        print(_weather!.main!.feelsLike);
-
+        _error = ""; // Reset error on success
         notifyListeners();
       } else {
         _error = "Failed to load data";
       }
     } catch (e) {
-      _error = "Failed to load data $e";
+      _error = "Failed to load data: $e";
     } finally {
-      _isloading = false;
-
+      _isLoading = false;
+      notifyListeners();
+      print(error);
+      print(_isLoading);
     }
   }
 }

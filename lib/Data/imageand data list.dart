@@ -1,4 +1,3 @@
-
 Map<String, dynamic> imagepaths = {
   "Clear": "assets/images/clear.png",
   "Cloud": "assets/images/cloud-lightning.png",
