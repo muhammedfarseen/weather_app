@@ -16,7 +16,7 @@ class WeatherServiceProvider extends ChangeNotifier {
   String get error => _error;
 
   Future<void> fetchWeatherDataByCity(String city) async {
-    _isLoading = true; // Corrected from false to true
+    _isLoading = true;
     _error = "Error: ";
 
     try {
@@ -28,7 +28,7 @@ class WeatherServiceProvider extends ChangeNotifier {
         final data = jsonDecode(response.body);
         print(data);
         _weather = WeatherModel.fromJson(data);
-        _error = ""; // Reset error on success
+        _error = ""; 
         notifyListeners();
       } else {
         _error = "Failed to load data";

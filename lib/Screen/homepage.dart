@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:weather_app/Data/imageand%20data%20list.dart';
 import 'package:weather_app/Services/location%20provider.dart';
 import 'package:weather_app/Services/weather%20.dart';
-import 'package:weather_app/weather_respond_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -29,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
+    ////////////// current location\\\\\\\\\\\\
     final locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
     locationProvider.determinePosition().then((_) {
@@ -40,29 +40,27 @@ class _HomeScreenState extends State<HomeScreen>
         }
       }
     });
-    // Provider.of<locationprovider>(context, listen: false).determinePosition();
-    // Provider.of<WeatherServiceProvider>(context, listen: false)
-    //     .fetchWeatherDataByCity("dubai");
+   
   }
 
-  Weather? obbj;
+  
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final locationprovider = Provider.of<LocationProvider>(context);
     final weatherprovider = Provider.of<WeatherServiceProvider>(context);
-
+               /////////////sunrise and sunset cunvert time stamp\\\\\\\\\\\\\\\\\
     int sunriseTimestamp = weatherprovider.weather?.sys?.sunrise ?? 0;
     int sunsetTimestamp = weatherprovider.weather?.sys?.sunset ?? 0;
 
-// Convert the timestamp to a DateTime object
+
     DateTime sunriseDateTime =
         DateTime.fromMillisecondsSinceEpoch(sunriseTimestamp * 1000);
     DateTime sunsetDateTime =
         DateTime.fromMillisecondsSinceEpoch(sunsetTimestamp * 1000);
 
-// Format the sunrise time as a string
+
     String Sunrise = DateFormat.Hm().format(sunriseDateTime);
     String Sunset = DateFormat.Hm().format(sunsetDateTime);
 
@@ -395,7 +393,5 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-//   Future fetch() async {
-//     obbj = await fetchWeatherData();
-//   }
+
 }
