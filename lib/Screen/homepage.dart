@@ -72,9 +72,12 @@ class _HomeScreenState extends State<HomeScreen>
         child: FutureBuilder(
             future: null,
             builder: (context, snapshot) {
+              SizedBox(
+                height: 60,
+              );
               return Container(
                 padding:
-                    EdgeInsets.only(top: 55, right: 20, bottom: 20, left: 60),
+                    EdgeInsets.only(top: 50, right: 20, bottom: 50, left: 25),
                 height: size.height,
                 width: size.width,
                 color: Colors.white,
@@ -82,37 +85,42 @@ class _HomeScreenState extends State<HomeScreen>
                   children: [
                     clicked == true
                         ? Container(
-                            height: 45,
+                            height: 50,
+                            width: 265,
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Expanded(
-                                    child: TextFormField(
-                                        style: TextStyle(color: Colors.black),
-                                        controller: CitySearchController,
-                                        decoration: InputDecoration(
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black),
-                                          ),
-                                        ))),
+                                  child: TextFormField(
+                                    style: TextStyle(color: Colors.black),
+                                    controller: CitySearchController,
+                                    decoration: InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 IconButton(
-                                    onPressed: () {
-                                      print(CitySearchController.text);
-                                      Provider.of<WeatherServiceProvider>(
-                                              context,
-                                              listen: false)
-                                          .fetchWeatherDataByCity(
-                                              CitySearchController.text
-                                                  .toString());
-                                    },
-                                    icon: Icon(
-                                      Icons.search,
-                                      color: Colors.black,
-                                    ))
+                                  onPressed: () {
+                                    print(CitySearchController.text);
+                                    Provider.of<WeatherServiceProvider>(
+                                      context,
+                                      listen: false,
+                                    ).fetchWeatherDataByCity(
+                                      CitySearchController.text.toString(),
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.search,
+                                    color: Colors.black,
+                                  ),
+                                )
                               ],
                             ),
                           )
@@ -130,9 +138,11 @@ class _HomeScreenState extends State<HomeScreen>
                         return Container(
                           height: 50,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
                                       Icons.location_pin,
@@ -156,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen>
                                           height: 1,
                                         ),
                                         Text(
-                                          "Goodmornig",
+                                          _timechanger(),
                                           style: TextStyle(
                                             fontSize: 15,
                                             color: Colors.black,
@@ -189,15 +199,16 @@ class _HomeScreenState extends State<HomeScreen>
                       },
                     ),
                     SizedBox(
-                      height: 50,
+                      height: 10,
                     ),
                     Column(
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               height: 350,
-                              width: 300,
+                              width: 250,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
@@ -225,11 +236,13 @@ class _HomeScreenState extends State<HomeScreen>
                                                 "N/A"] ??
                                         "assets/images/default.png"),
                                   ),
-                                   if (isLoading)
+                                  if (isLoading)
                                     Center(
                                       child: CircularProgressIndicator(),
                                     ),
-                                    SizedBox(height: 15,),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
                                   Container(
                                     height: 130,
                                     width: 200,
@@ -243,7 +256,6 @@ class _HomeScreenState extends State<HomeScreen>
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
-                                       
                                         Text(
                                           "${weatherprovider.weather?.name ?? "N/A"}",
                                           style: TextStyle(
@@ -285,153 +297,159 @@ class _HomeScreenState extends State<HomeScreen>
                       height: 30,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15),
-                                topRight: Radius.circular(15),
-                                bottomLeft: Radius.circular(15),
-                                bottomRight: Radius.circular(15)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 7,
-                                blurRadius: 7,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          height: 185,
-                          width: 300,
-                          child: Column(
-                            children: [
-                              SizedBox(height: 15),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.device_thermostat_outlined,
-                                    color: Colors.red,
-                                    size: 45,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Temp-max",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      Text(
-                                        "${weatherprovider.weather?.main?.tempMax.toString()}",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.device_thermostat_outlined,
-                                        color: Colors.blue,
-                                        size: 45,
-                                      ),
-                                      Column(
-                                        children: [
-                                          Text(
-                                            "Temp-min",
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
-                                            ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  topRight: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 7,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            height: 185,
+                            width: 300,
+                            child: Column(
+                              children: [
+                                SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.device_thermostat_outlined,
+                                      color: Colors.red,
+                                      size: 45,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Temp-max",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
                                           ),
-                                          Text(
-                                            "${weatherprovider.weather?.main?.tempMin.toString()}",
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Divider(
-                                height: 50,
-                                color: Colors.black,
-                                thickness: 2,
-                                indent: 10,
-                                endIndent: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    "assets/images/sun.png",
-                                    height: 55,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "sunrise",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700,
                                         ),
-                                      ),
-                                      Text(
-                                        "${Sunrise} AM",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700,
+                                        Text(
+                                          "${weatherprovider.weather?.main?.tempMax.toString()}",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 25,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/moon.png",
-                                        height: 55,
-                                      ),
-                                      Column(
-                                        children: [
-                                          Text(
-                                            "sunset",
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.device_thermostat_outlined,
+                                          color: Colors.blue,
+                                          size: 45,
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              "Temp-min",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            "${Sunset} PM",
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
+                                            Text(
+                                              "${weatherprovider.weather?.main?.tempMin.toString()}",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                             ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  height: 50,
+                                  color: Colors.black,
+                                  thickness: 2,
+                                  indent: 10,
+                                  endIndent: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/sun.png",
+                                      height: 55,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "sunrise",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
+                                        ),
+                                        Text(
+                                          "${Sunrise} AM",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width: 25,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/moon.png",
+                                          height: 55,
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              "sunset",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              "${Sunset} PM",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -442,5 +460,18 @@ class _HomeScreenState extends State<HomeScreen>
             }),
       ),
     );
+  }
+}
+
+String _timechanger() {
+  var hour = DateTime.now().hour;
+  if (hour < 12) {
+    return "GOOD MORNING";
+  } else if (hour < 16) {
+    return "GOOD AFTERNOON";
+  } else if (hour < 19) {
+    return "GOOD EVENING";
+  } else {
+    return 'GOOD NIGHT';
   }
 }
